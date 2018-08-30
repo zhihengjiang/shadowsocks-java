@@ -1,13 +1,14 @@
 package org.shadowsocks.handler.server;
 
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.shadowsocks.crypto.SSCrypto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.shadowsocks.crypto.SSCrypto;
 
 import java.net.InetAddress;
 
@@ -65,7 +66,7 @@ public class AddressHandler extends ChannelInboundHandlerAdapter {
             dataQueue.readUnsignedByte();
             byte[] ipBytes = new byte[4];
             dataQueue.readBytes(ipBytes);
-            host = InetAddress.getByAddress(ipBytes).toString().substring(1);            
+            host = InetAddress.getByAddress(ipBytes).toString().substring(1);
             port = dataQueue.readShort();
         } else if (addressType == ADDR_TYPE_HOST) {
             int hostLength = dataQueue.getUnsignedByte(1);

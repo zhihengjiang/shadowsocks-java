@@ -46,6 +46,13 @@
             <artifactId>okhttp</artifactId>
             <version>3.11.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.6</version>
+        </dependency>
+
 
     </dependencies>
 

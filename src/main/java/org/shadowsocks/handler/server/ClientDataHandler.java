@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.shadowsocks.crypto.SSCrypto;
 
 import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ClientDataHandler extends ChannelInboundHandlerAdapter {
@@ -96,6 +98,7 @@ public class ClientDataHandler extends ChannelInboundHandlerAdapter {
 
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
+            System.out.println("!!!!!!!!!!!!!!!!!!!!:"+new String(ByteBufUtil.getBytes(byteBuffer),StandardCharsets.UTF_8));
             ctx.writeAndFlush(byteBuffer);
         }
 
@@ -104,6 +107,9 @@ public class ClientDataHandler extends ChannelInboundHandlerAdapter {
             byte[] bytes = ByteBufUtil.getBytes(msg);
             try {
                 byte[] encrypt = ssCrypto.encrypt(bytes, bytes.length);
+
+                System.out.println("++++++++++++++++:\n"+new String(bytes,StandardCharsets.UTF_8));
+
                 clientCtx.writeAndFlush(Unpooled.copiedBuffer(encrypt));
             } catch (Exception e) {
                 ctx.close();
