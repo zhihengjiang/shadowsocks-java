@@ -37,13 +37,12 @@ public abstract class BaseCrypto implements SSCrypto
     protected StreamCipher mEncryptCipher = null;
     protected StreamCipher mDecryptCipher = null;
 
-    protected byte[] mEncryptIV;
-    protected byte[] mDecryptIV;
+    private byte[] IV;
 
     // One SSCrypto could only do one decrypt/encrypt at the same time.
     protected ByteArrayOutputStream mData;
 
-    private byte [] mLock = new byte[0];
+    private final byte [] mLock = new byte[0];
 
     public BaseCrypto(String name, String password) throws CryptoException
     {
@@ -62,23 +61,22 @@ public abstract class BaseCrypto implements SSCrypto
     }
 
     public byte [] getIV(boolean encrypt){
-        if (encrypt){
-            if (mEncryptIV == null){
-                mEncryptIV = Utils.randomBytes(mIVLength);
-            }
-            return mEncryptIV;
-        }else
-            return mDecryptIV;
+        if(IV == null){
+            IV = Utils.randomBytes(mIVLength);
+        }
+        return IV;
     }
 
     private byte [] encryptLocked(byte[] in) throws CryptoException
     {
         mData.reset();
         if (mEncryptCipher == null) {
-            mEncryptIV = getIV(true);
-            mEncryptCipher = createCipher(mEncryptIV, true);
+            IV = getIV(true);
+            mEncryptCipher = createCipher(IV, true);
+            mDecryptCipher = createCipher(IV, false);
             try {
-                mData.write(mEncryptIV);
+                //如果第一次加或解密，在密文前加上IV(Initial Vector)
+                mData.write(IV);
             } catch (IOException e) {
                 throw new CryptoException(e);
             }
@@ -105,12 +103,15 @@ public abstract class BaseCrypto implements SSCrypto
     {
         byte[] data;
         mData.reset();
+        //如果首次加解密，从密文的前mIVLength个 bytes取出IV
         if (mDecryptCipher == null) {
-            mDecryptCipher = createCipher(in, false);
-            mDecryptIV = new byte[mIVLength];
+            IV = new byte[mIVLength];
             data = new byte[in.length - mIVLength];
-            System.arraycopy(in, 0, mDecryptIV, 0, mIVLength);
+            System.arraycopy(in, 0, IV, 0, mIVLength);
+
             System.arraycopy(in, mIVLength, data, 0, in.length - mIVLength);
+            mDecryptCipher = createCipher(IV, false);
+            mEncryptCipher = createCipher(IV, true);
         } else {
             data = in;
         }
