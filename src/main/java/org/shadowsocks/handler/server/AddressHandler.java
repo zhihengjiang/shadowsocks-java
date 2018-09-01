@@ -45,7 +45,6 @@ public class AddressHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf buff = (ByteBuf) msg;
-
         if (buff.readableBytes() <= 0) {
             return;
         }

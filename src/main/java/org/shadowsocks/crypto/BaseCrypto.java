@@ -43,7 +43,7 @@ public abstract class BaseCrypto implements SSCrypto
     // One SSCrypto could only do one decrypt/encrypt at the same time.
     protected ByteArrayOutputStream mData;
 
-    private byte [] mLock = new byte[0];
+    private final byte [] mLock = new byte[0];
 
     public BaseCrypto(String name, String password) throws CryptoException
     {

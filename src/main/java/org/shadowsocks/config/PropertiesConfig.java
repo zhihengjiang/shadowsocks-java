@@ -1,4 +1,11 @@
 package org.shadowsocks.config;
 
-public class PropertiesConfig {
+public class PropertiesConfig extends BaseConfig{
+    public PropertiesConfig(String path){
+        super(path);
+    }
+    @Override
+    public RealConfig loadConfig(String path) {
+        return new RealConfig();
+    }
 }

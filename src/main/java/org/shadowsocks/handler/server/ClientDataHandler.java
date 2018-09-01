@@ -98,7 +98,7 @@ public class ClientDataHandler extends ChannelInboundHandlerAdapter {
 
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
-            System.out.println("!!!!!!!!!!!!!!!!!!!!:"+new String(ByteBufUtil.getBytes(byteBuffer),StandardCharsets.UTF_8));
+//            System.out.println("!!!!!!!!!!!!!!!!!!!!:"+new String(ByteBufUtil.getBytes(byteBuffer),StandardCharsets.UTF_8));
             ctx.writeAndFlush(byteBuffer);
         }
 
@@ -107,6 +107,7 @@ public class ClientDataHandler extends ChannelInboundHandlerAdapter {
             byte[] bytes = ByteBufUtil.getBytes(msg);
             try {
                 byte[] encrypt = ssCrypto.encrypt(bytes, bytes.length);
+                System.out.println(ctx.channel()+Arrays.toString(ssCrypto.getIV(true)));
 
                 System.out.println("++++++++++++++++:\n"+new String(bytes,StandardCharsets.UTF_8));
 
