@@ -11,7 +11,6 @@ public class Socks5InitialRequestHandler extends SimpleChannelInboundHandler<Def
     private static final Logger logger = LoggerFactory.getLogger(Socks5InitialRequestHandler.class);
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, DefaultSocks5InitialRequest msg) {
-        System.out.println(msg.version()+","+ msg.decoderResult());
         if(msg.decoderResult().isFailure()) {
             logger.warn("current protocol is not socks5");
             ctx.fireChannelRead(msg);

@@ -29,10 +29,7 @@ public class Remote2LocalHandler extends ChannelInboundHandlerAdapter {
         if(isProxy){
             ByteBuf buff = (ByteBuf)remoteMsg;
             byte[] encrypted = ByteBufUtil.getBytes(buff);
-            System.out.println(Arrays.toString((ssCrypto.getIV(false))));
             byte[] decrypted = ssCrypto.decrypt(encrypted,encrypted.length);
-            System.out.println(Arrays.toString((ssCrypto.getIV(false)))+encrypted.length+","+decrypted.length);
-            System.out.println(new String(decrypted,StandardCharsets.UTF_8));
             logger.info("relay response of target server to client");
 //        System.out.println("========="+Unpooled.copiedBuffer(decrypted).toString(StandardCharsets.US_ASCII));
             clientChannelContext.writeAndFlush(Unpooled.copiedBuffer(decrypted));
