@@ -3,8 +3,8 @@ package org.shadowsocks.config;
 public abstract class BaseConfig implements Config{
 
     private RealConfig config;
-    BaseConfig(String path){
-        this.config = loadConfig(path);
+    public BaseConfig(Object source){
+        this.config = loadConfig(source);
     }
 
 

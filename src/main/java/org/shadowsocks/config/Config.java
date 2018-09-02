@@ -8,6 +8,6 @@ public interface Config {
     String getPassword();
     int getTimeout();
     String getMethod();
-    RealConfig loadConfig(String path);
+    RealConfig loadConfig(Object source);
 
 }

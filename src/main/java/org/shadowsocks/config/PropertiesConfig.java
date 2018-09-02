@@ -5,7 +5,7 @@ public class PropertiesConfig extends BaseConfig{
         super(path);
     }
     @Override
-    public RealConfig loadConfig(String path) {
+    public RealConfig loadConfig(Object path) {
         return new RealConfig();
     }
 }

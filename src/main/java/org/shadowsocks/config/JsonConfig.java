@@ -13,12 +13,12 @@ public class JsonConfig extends BaseConfig {
     }
 
     @Override
-    public RealConfig loadConfig(String path) {
+    public RealConfig loadConfig(Object path) {
         Gson gson = new Gson();
         RealConfig config = new RealConfig();
         try{
 
-            JsonReader reader = new JsonReader(new FileReader(path));
+            JsonReader reader = new JsonReader(new FileReader((String)path));
             config = gson.fromJson(reader,RealConfig.class);
         }
         catch (IOException e){
