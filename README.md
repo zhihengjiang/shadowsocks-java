@@ -9,9 +9,9 @@ Shadowsocks-java 是一个基于SOCKS5代理的使用java开发的[shadowsocks](
 ## Build & Install
 
 ```bash
-git clone https://github.com/ThalesOfChengDu/shasowsocks-java
+git clone https://github.com/zhihengjiang/shasowsocks-java
 cd shadowsocks-java
-mvn install
+mvn package
 ```
 
 ## Getting Started
@@ -31,6 +31,28 @@ mvn install
 ```
 
 详细的参数解释可以参考 [shadowsocks](https://github.com/shadowsocks/shadowsocks/wiki) 的文档.
+
+在本地使用
+```bash
+chmod +x ./sslocal.sh
+./sslocal.sh -c config.json
+
+```
+
+在服务器端使用
+```bash
+chmod +x ./ssserver.sh
+./ssserver.sh -c config.json
+
+```
+
+更多脚本参数请输入
+```bash
+./ssserver.sh -h
+./sslocal.sh -h
+
+```
+
 ## 支持的加密方式
 
 ### 流加密
