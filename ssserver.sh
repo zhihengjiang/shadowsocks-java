@@ -100,7 +100,7 @@ echo "config: $config"
 if [ -n "$config" ]
 then
     echo "Starting shadowsocks ...";
-    java -jar ./target/shadowsocks-java-1.0-SNAPSHOT.jar config=${config}
+    java -jar ./target/shadowsocks-java-1.0-SNAPSHOT.jar ${main} config=${config}
 elif [ -z "$server" ]
 then
     echo "please set a server address"
